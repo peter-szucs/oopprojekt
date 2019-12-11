@@ -8,7 +8,6 @@ public class Board {
     private static final int COLS = 3;
     private String empty = "   ";
 
-
     public Board() {
         board = new String[ROWS][COLS];
         initializeBoard();
@@ -23,7 +22,6 @@ public class Board {
     }
 
     public void printBoard() {
-        String dividers = "";
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 if (j != COLS-1) {
@@ -38,6 +36,42 @@ public class Board {
     }
 
     public void makePlay(int spot, String player) {
-        if (this.board)
+        int row = (int) (Math.floor((spot - 1) % 3));
+        int col = (spot - (row * 3)) - 1;
+        if (this.board[row][col].equals(empty)) {
+            board[row][col] = " " + player + " ";
+        }
+    }
+
+    public boolean isGameOver() {
+        // check rows
+        for (int i = 0; i < ROWS; i++) {
+            if (!board[i][0].matches(empty) &&
+                    board[i][0].equals(board[i][1]) &&
+                    board[i][1].equals(board[i][2])) {
+                return true;
+            }
+        }
+        // check columns
+        for (int j = 0; j < COLS; j++) {
+            if (!board[0][j].matches(empty) &&
+                    board[0][j].equals(board[1][j]) &&
+                    board[1][j].equals(board[2][j])) {
+                return true;
+            }
+        }
+        // check diagonals
+        if (!board[0][0].matches(empty) &&
+                board[0][0].equals(board[1][1]) &&
+                board[1][1].equals(board[2][2])) {
+            return true;
+        }
+        if (!board[0][2].matches(empty) &&
+                board[0][2].equals(board[1][1]) &&
+                board[1][1].equals(board[2][0])) {
+            return true;
+        }
+        // no winner
+        return false;
     }
 }

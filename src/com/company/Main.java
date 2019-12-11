@@ -1,20 +1,29 @@
 package com.company;
-import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
-	    Scanner playerInput = new Scanner(System.in);
+	    //Scanner playerInput = new Scanner(System.in);
 	    Board gameBoard = new Board();
+	    Prompter prompter = new Prompter(gameBoard);
 	    Player playerOne = new Player("X");
 	    Player playerTwo = new Player("O");
-		System.out.println("Player X, type your name: ");
-		playerOne.setName(playerInput.nextLine());
-		System.out.println("Player O, type your name: ");
-		playerTwo.setName(playerInput.nextLine());
-	    //do {
+		Player whatPlayer = playerOne;
+		playerOne.setName(prompter.initializePlayer("X"));
+		playerTwo.setName(prompter.initializePlayer("Y"));
+	    do {
+			clearScreen();
 	        gameBoard.printBoard();
-	        System.out.println(playerOne.getName() + "(" + playerOne.getPlayerType() + ")" + ", your move! (1-9)");
-        //} while (true);
+	        prompter.promptForPlayerInput(whatPlayer);
+	        if (whatPlayer == playerOne) {
+	        	whatPlayer = playerTwo;
+			} else {
+	        	whatPlayer = playerOne;
+			}
+        } while (!gameBoard.isGameOver());
     }
+	public static void clearScreen() {
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+	}
 }
