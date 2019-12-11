@@ -35,12 +35,15 @@ public class Board {
         }
     }
 
-    public void makePlay(int spot, String player) {
-        int row = (int) (Math.floor((spot - 1) % 3));
+    public boolean makePlay(int spot, String player) {
+        int row = (int) Math.floor((spot - 1) / 3);
         int col = (spot - (row * 3)) - 1;
         if (this.board[row][col].equals(empty)) {
             board[row][col] = " " + player + " ";
+        } else {
+            return false;
         }
+        return true;
     }
 
     public boolean isGameOver() {
