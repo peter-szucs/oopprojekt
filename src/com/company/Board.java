@@ -82,10 +82,13 @@ public class Board {
     }
 
     public boolean isNoMoves() {
-        List<String[]> checkIfEmpty = Arrays.asList(board);
-        if (checkIfEmpty.contains(empty)) {
-            return true;
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                if (board[i][j].matches(empty)) {
+                    return false;
+                }
+            }
         }
-        return false;
+        return true;
     }
 }

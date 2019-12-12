@@ -21,6 +21,7 @@ public class Main {
 				break;
 			}
 	        if (gameBoard.isNoMoves()) {
+				gameBoard.printBoard();
 	        	prompter.fullBoard();
 	        	break;
 			}
