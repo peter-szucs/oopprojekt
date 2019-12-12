@@ -1,9 +1,5 @@
 package com.company;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.SortedSet;
-
 public class Board {
     private String[][] board;
     private static final int ROWS = 3;
