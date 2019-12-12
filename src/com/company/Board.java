@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.SortedSet;
 
 public class Board {
@@ -74,7 +76,16 @@ public class Board {
                 board[1][1].equals(board[2][0])) {
             return true;
         }
+
         // no winner
+        return false;
+    }
+
+    public boolean isNoMoves() {
+        List<String[]> checkIfEmpty = Arrays.asList(board);
+        if (checkIfEmpty.contains(empty)) {
+            return true;
+        }
         return false;
     }
 }

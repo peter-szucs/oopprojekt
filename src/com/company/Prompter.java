@@ -43,7 +43,11 @@ public class Prompter {
         System.out.println("Only numbers between " + min + "-" + max + " please!");
     }
 
-    public void gameOver() {
-        System.out.println("");
+    public void gameOver(Player player) {
+        System.out.println("\n\nCongratulations " + player.getName() + ". You won!");
+    }
+
+    public void fullBoard() {
+        System.out.println("No more moves left. No winner.");
     }
 }

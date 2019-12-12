@@ -10,17 +10,27 @@ public class Main {
 		Player whatPlayer = playerOne;
 		playerOne.setName(prompter.initializePlayer("X"));
 		playerTwo.setName(prompter.initializePlayer("Y"));
-		
-		while (!gameBoard.isGameOver()) {
+
+		while (true) {
 			clearScreen();
 	        gameBoard.printBoard();
 	        prompter.promptForPlayerInput(whatPlayer);
+	        if (gameBoard.isGameOver()) {
+	        	gameBoard.printBoard();
+				prompter.gameOver(whatPlayer);
+				break;
+			}
+	        if (gameBoard.isNoMoves()) {
+	        	prompter.fullBoard();
+	        	break;
+			}
 	        if (whatPlayer == playerOne) {
 	        	whatPlayer = playerTwo;
 			} else {
 	        	whatPlayer = playerOne;
 			}
         }
+
 
     }
 	public static void clearScreen() {
