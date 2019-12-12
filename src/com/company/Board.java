@@ -11,7 +11,7 @@ public class Board {
         initializeBoard();
     }
 
-    private void initializeBoard() {
+    public void initializeBoard() {
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 board[i][j] = "   ";
