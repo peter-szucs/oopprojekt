@@ -39,8 +39,7 @@ public class Prompter {
 
     public int promptForPlayerInput() {
         System.out.println("Your move! (1-9): ");
-        boolean checkInput = false;
-        int playerMove = 0;
+        int playerMove;
         while (true) {
             try {
                 playerMove = playerInput.nextInt();
@@ -61,7 +60,7 @@ public class Prompter {
         System.out.println("Only numbers between " + min + "-" + max + " please!");
     }
 
-    public void checkPointStanding(Player p1, Player p2) {
+    public void printPointStanding(Player p1, Player p2) {
         System.out.println(p1.getName() + " has " + p1.getNumberOfWins() + " wins.\n" +
                 p2.getName() + " has " + p2.getNumberOfWins() + " wins.");
     }
@@ -97,5 +96,8 @@ public class Prompter {
                 wrongInput(1, 3);
             }
         }
+    }
+    public void goodBye() {
+        System.out.println("\nThank you for playing!");
     }
 }
