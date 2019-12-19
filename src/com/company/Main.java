@@ -7,8 +7,10 @@ public class Main {
 	    Prompter prompter = new Prompter();
 	    Player playerOne;
 	    Player playerTwo;
+		Player whatPlayer;
 	    boolean choiceGameLoop = true;
 	    while (choiceGameLoop) {
+			boolean outerGameLoop = true;
 			boolean gameLoop = true;
 			if (prompter.gameMenu()) {
 				playerOne = new Human("X");
@@ -20,55 +22,59 @@ public class Main {
 				playerTwo = new AI("O", gameBoard);
 				playerOne.setName(prompter.initializePlayer("X"));
 			}
-			Player whatPlayer = playerOne;
-			while (gameLoop) {
-				boolean checkInput = false;
-				clearScreen();
-				gameBoard.printBoard();
-				while (!checkInput) {
-					int playerMove = whatPlayer.makeMove();
-					if (playerMove >= 1 && playerMove <= 9) {
-						if (gameBoard.makePlay(playerMove, whatPlayer.getPlayerGameSymbol())) {
-							checkInput = true;
+			while (outerGameLoop) {
+				whatPlayer = playerOne;
+				while (gameLoop) {
+					boolean checkInput = false;
+					clearScreen();
+					gameBoard.printBoard();
+					while (!checkInput) {
+						int playerMove = whatPlayer.makeMove();
+						if (playerMove >= 1 && playerMove <= 9) {
+							if (gameBoard.isSpotEmpty(playerMove)) {
+								gameBoard.makePlay(playerMove, whatPlayer.getPlayerGameSymbol());
+								checkInput = true;
+							} else {
+								System.out.println("That spot is taken. Try a free one!");
+							}
 						} else {
-							System.out.println("That spot is taken. Try a free one!");
+							prompter.wrongInput(1, 9);
 						}
+					}
+					//whatPlayer.makeMove();
+					//prompter.promptForPlayerInput(whatPlayer);
+					if (gameBoard.isGameOver()) {
+						gameBoard.printBoard();
+						prompter.gameOver(whatPlayer);
+						gameLoop = false;
+					} else if (gameBoard.isNoMoves()) {
+						gameBoard.printBoard();
+						prompter.fullBoard();
+						gameLoop = false;
+					}
+					if (whatPlayer == playerOne) {
+						whatPlayer = playerTwo;
 					} else {
-						prompter.wrongInput(1, 9);
+						whatPlayer = playerOne;
 					}
 				}
-				//whatPlayer.makeMove();
-				//prompter.promptForPlayerInput(whatPlayer);
-				if (gameBoard.isGameOver()) {
-					gameBoard.printBoard();
-					prompter.gameOver(whatPlayer);
-					break;
-				}
-				if (gameBoard.isNoMoves()) {
-					gameBoard.printBoard();
-					prompter.fullBoard();
-					break;
-				}
-				if (whatPlayer == playerOne) {
-					whatPlayer = playerTwo;
-				} else {
-					whatPlayer = playerOne;
-				}
-			}
-			prompter.checkPointStanding(playerOne, playerTwo);
-			switch (prompter.afterGameMenu()) {
-				case 1:
-					gameBoard.initializeBoard();
-					break;
-				case 2:
-					gameBoard.initializeBoard();
-					gameLoop = false;
-					break;
-				case 3:
-					gameLoop = false;
-					choiceGameLoop = false;
-					break;
+				prompter.printPointStanding(playerOne, playerTwo);
+				switch (prompter.afterGameMenu()) {
+					case 1:
+						gameBoard.initializeBoard();
+						gameLoop = true;
+						break;
+					case 2:
+						gameBoard.initializeBoard();
+						outerGameLoop = false;
+						break;
+					case 3:
+						outerGameLoop = false;
+						choiceGameLoop = false;
+						prompter.goodBye();
+						break;
 
+				}
 			}
 
 		}
